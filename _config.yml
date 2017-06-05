@@ -1,1 +1,1 @@
-exclude: ["CNAME", ".gitignore"]
+exclude: ["CNAME"]
