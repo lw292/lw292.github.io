@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Math Multiplication</title>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+  crossorigin="anonymous"></script>
+  
+<script>
+	var urlParam = function(name, w){
+	    w = w || window;
+	    var rx = new RegExp('[\&|\?]'+name+'=([^\&\#]+)'),
+	        val = w.location.search.match(rx);
+	    return !val ? '':val[1];
+	}
+	$(function() {
+		// Levels
+		// The index is the level number.
+		var levels = [
+			{
+				factor: 10,
+				ceiling: 9,
+				floor: 2
+			}
+		]
+		
+		var level = 0;
+		if (urlParam('level') != "") {
+			urlLevel = parseInt(urlParam('level'));
+			if (levels[urlLevel] != undefined) {
+				level = urlLevel;
+			}
+		}
+		var total = 25;
+		if (urlParam('total') != "") {
+			total = parseInt(urlParam('total'))
+		}
+		var options = levels[level]
+		
+		var pairs = [];
+		var pairsString = [];
+		var i = 0;
+		do {
+			var n1 = 0;
+			var n2 = 0;
+			do {
+				n1 = Math.floor((Math.random() * options.factor) + 1);
+			} while (n1 < options.floor || n1 > options.ceiling);
+			do {
+				n2 = Math.floor((Math.random() * options.factor) + 1);
+			} while (n2 < options.floor || n2 > options.ceiling);
+			if ($.inArray([n1, n2].toString(), pairsString) == -1) {
+				if (n1 <= n2) { 
+				    pairs.push([n1, n2]);
+					pairsString.push([n1, n2].toString());
+				    i++;
+				}
+			}
+		} while (i < total);
+		$.each(pairs, function(index, value){
+			$("#questions").append($("<div class='question'>" + value[0].toString() + "<br/>&#215; " + value[1].toString() + "<hr/></div>"));
+		});
+	});
+</script>
+<style>
+	html * {
+		margin: 0;
+		padding: 0;
+	}
+	body {
+		width: 800px;
+	}
+	.question {
+		width: 100px;
+		text-align: right;
+		font-size: 43px;
+		margin: 37px 25px;
+	}
+	#questions {
+		display: flex;
+		flex-wrap: wrap;
+	}
+	hr {
+		margin-top: 15px;
+	}
+</style>
+</head>
+
+<body>
+	<div id="questions"></div>
+</body>
+
+</html>
