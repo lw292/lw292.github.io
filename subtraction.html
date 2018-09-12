@@ -26,7 +26,7 @@
 			{
 				factor: 100,
 				ceiling: 99,
-				floor: 10
+				floor: 5
 			},
 			{
 				factor: 1000,
@@ -61,7 +61,7 @@
 				n2 = Math.floor((Math.random() * options.factor) + 1);
 			} while (n2 < options.floor || n2 > options.ceiling);
 			if ($.inArray([n1, n2].toString(), pairsString) == -1) {
-				if (((n1 - n2) > 0) && (n1%10 < n2%10)) {
+				if (((n1 - n2) > 0) && (!options.regrouping || (n1%10 < n2%10))) {
 				    pairs.push([n1, n2]);
 					pairsString.push([n1, n2].toString());
 				    i++;
